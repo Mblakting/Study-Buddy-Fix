@@ -1,0 +1,15 @@
+import { Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+
+const MainLayout = () => {
+  return (
+    <div className="min-h-screen bg-slate-50">
+      <Navbar />
+      <main className="container mx-auto p-4">
+        <Outlet /> {/* Ini wajib ada agar Dashboard muncul */}
+      </main>
+    </div>
+  );
+};
+
+export default MainLayout;
