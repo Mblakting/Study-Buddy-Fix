@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard';
 import MainLayout from './layouts/MainLayout';
 
 function App() {
-  // Gunakan fungsi pengambil token agar selalu sinkron dengan localStorage
+  // Gunakan fungsi pengambil token agar selalu sinkron dengan localStoragenya
   const [token, setToken] = useState(localStorage.getItem('user_token'));
 
   return (

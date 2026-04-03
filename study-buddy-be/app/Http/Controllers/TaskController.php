@@ -13,7 +13,7 @@ class TaskController extends Controller
         return auth()->user()->tasks;
     }
 
-    // simpan
+    // simpan tugas
     public function store(Request $request)
     {
         $validated = $request->validate([
