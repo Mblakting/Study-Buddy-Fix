@@ -7,8 +7,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     authService.logout();
-    // Memaksa reload ke login agar state bersih
-    window.location.href = '/login';
   };
 
   return (

@@ -16,10 +16,8 @@ const Login = ({ onLoginSuccess }) => {
       
       if (response.token) {
         console.log("Login sukses!");
-        // 1. Update state token di App.jsx langsung
         onLoginSuccess(response.token); 
-        // 2. Pindah halaman secara internal lewat React Router
-        navigate('/'); 
+        navigate('/dashboard'); 
       }
     } catch (err) {
       console.error(err);
@@ -39,7 +37,6 @@ const Login = ({ onLoginSuccess }) => {
           <h1 className="text-2xl font-bold text-slate-800">StudyBuddy Login</h1>
         </div>
 
-        // from login
         <form onSubmit={handleLogin} className="space-y-5">
           <input 
             type="email" placeholder="Email" required
