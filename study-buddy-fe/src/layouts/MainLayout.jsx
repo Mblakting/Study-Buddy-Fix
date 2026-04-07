@@ -1,13 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-const MainLayout = () => {
+const MainLayout = ({ onLogout }) => {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navbar />
-      <main className="container mx-auto p-4">
-        <Outlet />
-      </main>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-main)' }}>
+      <Navbar onLogout={onLogout} />
+      <Outlet />
     </div>
   );
 };

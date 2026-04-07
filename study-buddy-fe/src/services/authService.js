@@ -25,7 +25,6 @@ const authService = {
     localStorage.removeItem('user_token');
     localStorage.removeItem('user_id');
     localStorage.removeItem('user_name');
-    window.location.href = '/';
   },
 };
 

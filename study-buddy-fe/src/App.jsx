@@ -10,6 +10,13 @@ import GuestLayout from './layouts/GuestLayout';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('user_token'));
 
+  const handleLogout = () => {
+    localStorage.removeItem('user_token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_name');
+    setToken(null);
+  };
+
   return (
     <Router>
       <Routes>
@@ -17,7 +24,7 @@ function App() {
         <Route path="/login" element={!token ? <Login onLoginSuccess={setToken} /> : <Navigate to="/dashboard" />} />
         <Route path="/signup" element={!token ? <Register /> : <Navigate to="/dashboard" />} />
 
-        <Route path="/dashboard" element={token ? <MainLayout /> : <GuestLayout />}>
+        <Route path="/dashboard" element={token ? <MainLayout onLogout={handleLogout} /> : <GuestLayout />}>
           <Route index element={<Dashboard isGuest={!token} />} />
         </Route>
 

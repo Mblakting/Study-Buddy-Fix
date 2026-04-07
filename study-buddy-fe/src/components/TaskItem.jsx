@@ -7,30 +7,24 @@ const TaskItem = ({ task, onToggle, onDelete }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center group"
+      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--bg-main)', padding: '1rem', borderRadius: 12, border: '1px solid var(--border)' }}
     >
-      <div className="flex items-center gap-4">
-        <button
-          onClick={() => onToggle(task.id)}
-          className={`p-1 rounded-full transition-colors ${
-            task.completed ? 'text-green-500 bg-green-50' : 'text-slate-300 hover:text-indigo-500'
-          }`}
-        >
-          <CheckCircle size={24} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <button onClick={() => onToggle(task.id)} style={{
+          background: task.completed ? 'rgba(16,185,129,0.1)' : 'transparent',
+          border: 'none', cursor: 'pointer', padding: 4, borderRadius: '50%',
+          color: task.completed ? '#10b981' : 'var(--text-muted)', display: 'flex',
+        }}>
+          <CheckCircle size={22} />
         </button>
-
-        <span className={`font-medium transition-all ${
-          task.completed ? 'line-through text-slate-400' : 'text-slate-700'
-        }`}>
+        <span style={{ fontWeight: 600, fontSize: '0.95rem', textDecoration: task.completed ? 'line-through' : 'none', color: task.completed ? 'var(--text-muted)' : 'var(--text-main)' }}>
           {task.title}
         </span>
       </div>
-
-      <button
-        onClick={() => onDelete(task.id)}
-        className="text-slate-300 hover:text-red-500 p-2 transition-colors"
-      >
-        <Trash2 size={20} />
+      <button onClick={() => onDelete(task.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 6, display: 'flex', borderRadius: 8 }}
+        onMouseEnter={e => e.currentTarget.style.color = '#ef4444'}
+        onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
+        <Trash2 size={18} />
       </button>
     </motion.div>
   );
