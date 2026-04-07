@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
 });
 
-// Tambahkan interceptor untuk menyisipkan token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('user_token');
   if (token) {
@@ -12,5 +11,18 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('user_token');
+      localStorage.removeItem('user_id');
+      localStorage.removeItem('user_name');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

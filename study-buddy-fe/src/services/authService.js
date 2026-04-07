@@ -8,26 +8,25 @@ const authService = {
 
   login: async (credentials) => {
     const response = await api.post('/login', credentials);
-    
-    // Pastikan ini mengambil data dari response yang benar
+
     if (response.data.token) {
       localStorage.setItem('user_token', response.data.token);
     }
-    
-    // Ambil ID dari objek user (ID: 3 pada gambar kamu)
-    // Pastikan strukturnya seperti ini
+
     if (response.data.user) {
-    localStorage.setItem('user_id', response.data.user.id); // Simpan angka 3
-    localStorage.setItem('user_name', response.data.user.name);
+      localStorage.setItem('user_id', response.data.user.id);
+      localStorage.setItem('user_name', response.data.user.name);
     }
-        
+
     return response.data;
   },
-  
+
   logout: () => {
-    localStorage.clear();
+    localStorage.removeItem('user_token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_name');
     window.location.href = '/';
-  }
+  },
 };
 
 export default authService;

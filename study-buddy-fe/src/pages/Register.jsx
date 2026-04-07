@@ -1,26 +1,27 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import authService from '../services/authService';
 
 const Register = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    const handleRegister = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      try {
-        await authService.signup(formData); 
-        alert("Akun berhasil dibuat! Silakan login.");
-        navigate('/login');
-      } catch (err) {
-        console.error(err.response?.data || err.message);
-        alert(err.response?.data?.message || "Gagal daftar. Periksa kembali data Anda.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      await authService.signup(formData);
+      alert('Akun berhasil dibuat! Silakan login.');
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Gagal daftar. Periksa kembali data Anda.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
@@ -31,34 +32,36 @@ const Register = () => {
           <p className="text-slate-400 text-sm mt-1 text-center">Mulai atur jadwal belajarmu dengan cerdas.</p>
         </div>
 
+        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2 ml-1">Nama Lengkap</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Masukkan nama Anda"
               className="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 outline-none focus:ring-4 focus:ring-indigo-100"
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
             />
           </div>
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2 ml-1">Email</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               placeholder="nama@email.com"
               className="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 outline-none focus:ring-4 focus:ring-indigo-100"
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               required
             />
           </div>
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2 ml-1">Password</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               placeholder="Minimal 8 karakter"
               className="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 outline-none focus:ring-4 focus:ring-indigo-100"
-              onChange={(e) => setFormData({...formData, password: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               required
             />
           </div>
@@ -68,8 +71,8 @@ const Register = () => {
             <p className="text-xs text-slate-500 leading-relaxed">Saya setuju dengan <span className="text-indigo-600 underline font-medium">Syarat & Ketentuan</span></p>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading || !formData.name || !formData.email || !formData.password}
             className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95"
           >

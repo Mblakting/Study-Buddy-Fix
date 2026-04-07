@@ -6,7 +6,7 @@ const MainLayout = () => {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       <main className="container mx-auto p-4">
-        <Outlet /> {/* Ini wajib ada agar Dashboard muncul */}
+        <Outlet />
       </main>
     </div>
   );

@@ -9,11 +9,9 @@ class TaskController extends Controller
 {
     public function index()
     {
-        // Hanya tampilkan tasks milik user yang login
         return auth()->user()->tasks;
     }
 
-    // simpan tugas
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -22,7 +20,6 @@ class TaskController extends Controller
             'deadline' => 'nullable|date',
         ]);
 
-        // Auto-assign user_id dari user yang login
         $validated['user_id'] = auth()->id();
 
         $task = Task::create($validated);
@@ -48,11 +45,17 @@ class TaskController extends Controller
             return response()->json(['message' => 'Task not found or unauthorized'], 404);
         }
 
-        $task->update($request->all());
+        $validated = $request->validate([
+            'title' => 'sometimes|string|max:255',
+            'description' => 'nullable|string',
+            'completed' => 'sometimes|boolean',
+            'deadline' => 'nullable|date',
+        ]);
+
+        $task->update($validated);
         return response()->json($task);
     }
 
-    // untuk usernya
     public function destroy($id)
     {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->first();

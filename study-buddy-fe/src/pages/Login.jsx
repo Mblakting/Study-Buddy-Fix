@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import authService from '../services/authService';
 
@@ -6,28 +6,25 @@ const Login = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
       const response = await authService.login({ email, password });
-      
       if (response.token) {
-        console.log("Login sukses!");
-        onLoginSuccess(response.token); 
-        navigate('/dashboard'); 
+        onLoginSuccess(response.token);
+        navigate('/dashboard');
       }
     } catch (err) {
-      console.error(err);
-      alert("Gagal login. Periksa email dan password.");
+      setError(err.response?.data?.message || 'Gagal login. Periksa email dan password.');
     } finally {
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
@@ -37,18 +34,20 @@ const Login = ({ onLoginSuccess }) => {
           <h1 className="text-2xl font-bold text-slate-800">StudyBuddy Login</h1>
         </div>
 
+        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+
         <form onSubmit={handleLogin} className="space-y-5">
-          <input 
+          <input
             type="email" placeholder="Email" required
             className="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 outline-none focus:border-indigo-500"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input 
+          <input
             type="password" placeholder="Password" required
             className="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 outline-none focus:border-indigo-500"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button 
+          <button
             type="submit" disabled={loading}
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl transition-all"
           >
