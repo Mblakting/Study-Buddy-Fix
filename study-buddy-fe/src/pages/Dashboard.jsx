@@ -114,6 +114,14 @@ const Dashboard = ({ isGuest }) => {
         @media (max-width: 992px) { .dash-grid { grid-template-columns: 1fr; } }
         .task-delete-btn:hover { color: #ef4444 !important; }
         .tab-btn:hover { border-color: var(--primary) !important; color: var(--text-main) !important; }
+        .dash-container { padding: 0 2rem; }
+        .task-form { display: flex; gap: 8px; flex-wrap: wrap; }
+        .task-input { width: 220px; }
+        @media (max-width: 600px) {
+          .dash-container { padding: 0 1rem; }
+          .task-form { width: 100%; }
+          .task-input { width: 100%; flex: 1; min-width: 0; }
+        }
       `}</style>
 
       {/* Inline Delete Confirm Modal */}
@@ -131,7 +139,7 @@ const Dashboard = ({ isGuest }) => {
         </div>
       )}
 
-      <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 2rem' }}>
+      <div className="dash-container" style={{ maxWidth: '1240px', margin: '0 auto' }}>
 
         {/* Alert Banner - Guest */}
         {isGuest && (
@@ -220,9 +228,9 @@ const Dashboard = ({ isGuest }) => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: 12 }}>
                 <h4 style={{ fontWeight: 700, fontSize: '1rem' }}>✅ Daftar Tugas</h4>
                 {!isGuest && (
-                  <form onSubmit={handleAddTask} style={{ display: 'flex', gap: 8 }}>
+                  <form onSubmit={handleAddTask} className="task-form">
                     <input value={newTaskName} onChange={e => { setNewTaskName(e.target.value); setTaskError(''); }}
-                      placeholder="Tambah tugas baru..." style={{ ...inputStyle, width: 220 }}
+                      placeholder="Tambah tugas baru..." className="task-input" style={{ ...inputStyle }}
                       onFocus={e => e.target.style.borderColor = 'var(--primary)'}
                       onBlur={e => e.target.style.borderColor = 'var(--border)'}
                     />
