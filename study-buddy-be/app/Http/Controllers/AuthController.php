@@ -36,7 +36,18 @@ class AuthController extends Controller
 
         $token = $user->createToken('API Token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user]);
+        return response()->json([
+            'token' => $token,
+            'user' => $user
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Logged out'
+        ]);
     }
 
     public function users()
@@ -44,7 +55,7 @@ class AuthController extends Controller
         return User::all();
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         User::destroy($id);
         return response()->json(['message' => 'User deleted']);

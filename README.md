@@ -1,25 +1,58 @@
-# Study Buddy Fullstack
+<div align="center">
 
-Proyek Study Buddy adalah aplikasi fullstack yang terdiri dari backend Laravel dan frontend React untuk membantu mahasiswa dalam mengelola tugas dan jadwal belajar.
+# 📚 StudyBuddy
 
-## Fitur Utama
+**Platform manajemen belajar fullstack untuk mahasiswa modern.**
 
-- Manajemen tugas (CRUD)
-- Sistem autentikasi pengguna
-- Antarmuka web responsif dengan Tailwind CSS
-- API RESTful untuk integrasi
+[![Laravel](https://img.shields.io/badge/Laravel-10-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-## Prerequisites
+[Demo](#) · [Laporan Bug](issues) · [Request Fitur](issues)
 
-Sebelum menjalankan proyek ini, pastikan Anda telah menginstal:
+</div>
 
-- **PHP** versi 8.1 atau lebih tinggi
-- **Composer** untuk dependency management PHP
-- **Node.js** versi 16 atau lebih tinggi
-- **npm** atau **yarn** untuk dependency management JavaScript
-- **MySQL** atau database lainnya yang didukung Laravel
+---
 
-## Instalasi
+## ✨ Fitur
+
+| Fitur | Deskripsi |
+|---|---|
+| 🔐 **Autentikasi** | Register, login, logout dengan Laravel Sanctum (token-based) |
+| ✅ **Manajemen Tugas** | Tambah, selesaikan, dan hapus tugas dengan animasi halus |
+| 📝 **Catatan Cepat** | Simpan catatan belajar langsung di browser |
+| ⏱️ **Focus Timer** | Pomodoro 25 menit dengan progress bar real-time |
+| 📊 **Rekap Statistik** | Visualisasi progress tugas harian |
+| 🌙 **Dark / Light Mode** | Mengikuti preferensi sistem, bisa di-toggle manual |
+| 📱 **Responsif** | Tampilan optimal di desktop, tablet, dan mobile |
+| 👤 **Mode Tamu** | Akses dashboard tanpa login (fitur terbatas) |
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend**
+- PHP 8.1+ · Laravel 10 · Laravel Sanctum
+- MySQL · RESTful API
+
+**Frontend**
+- React 19 · Vite 8 · React Router 7
+- Tailwind CSS 4 · Framer Motion · Lucide React
+
+---
+
+## 🚀 Instalasi & Menjalankan
+
+### Prerequisites
+
+Pastikan sudah terinstal:
+- **PHP** ≥ 8.1 & **Composer**
+- **Node.js** ≥ 18 & **npm**
+- **MySQL**
+
+---
 
 ### 1. Clone Repository
 
@@ -28,123 +61,198 @@ git clone https://github.com/username/study-buddy-fullstack.git
 cd study-buddy-fullstack
 ```
 
+---
+
 ### 2. Setup Backend (Laravel)
 
 ```bash
 cd study-buddy-be
 
-# Install PHP dependencies
+# Install dependencies
 composer install
 
-# Copy environment file
+# Salin file environment
 cp .env.example .env
 
-# Generate application key
+# Generate app key
 php artisan key:generate
-
-# Setup database
-# Edit file .env untuk mengatur koneksi database
-# Kemudian jalankan:
-php artisan migrate
-php artisan db:seed  # Jika ada seeder
 ```
 
-### 3. Setup Frontend (React/Vite)
+Edit file `.env`, sesuaikan koneksi database:
+
+```env
+DB_DATABASE=studybuddy
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
+
+```bash
+# Buat database, lalu jalankan migrasi
+php artisan migrate
+
+# Jalankan server
+php artisan serve
+```
+
+> Backend berjalan di `http://localhost:8000`
+
+---
+
+### 3. Setup Frontend (React)
 
 ```bash
 cd ../study-buddy-fe
 
-# Install Node.js dependencies
+# Install dependencies
 npm install
-
-# Copy environment file jika ada
-cp .env.example .env  # Jika ada
 ```
 
-## Menjalankan Aplikasi
+Pastikan file `.env` sudah ada (sudah tersedia di repo):
 
-### Backend
-
-```bash
-cd study-buddy-be
-php artisan serve
+```env
+VITE_API_URL=http://localhost:8000/api
 ```
 
-Server backend akan berjalan di `http://localhost:8000`
-
-### Frontend
-
 ```bash
-cd study-buddy-fe
+# Jalankan development server
 npm run dev
 ```
 
-Aplikasi frontend akan berjalan di `http://localhost:5173` (default Vite)
+> Frontend berjalan di `http://localhost:5173`
 
-## Struktur Proyek
+---
+
+## 📁 Struktur Proyek
 
 ```
 study-buddy-fullstack/
-├── study-buddy-be/          # Backend Laravel
-│   ├── app/                 # Kode aplikasi Laravel
-│   ├── database/            # Migrations dan seeders
-│   ├── routes/              # Definisi routes
-│   └── ...
-├── study-buddy-fe/          # Frontend React
-│   ├── src/                 # Kode sumber React
-│   ├── public/              # Asset statis
-│   └── ...
-└── README.md                # Dokumentasi ini
+├── study-buddy-be/                 # Backend Laravel
+│   ├── app/
+│   │   ├── Http/Controllers/
+│   │   │   ├── AuthController.php  # Register, Login, Logout
+│   │   │   └── TaskController.php  # CRUD Tugas
+│   │   └── Models/
+│   │       ├── User.php
+│   │       └── Task.php
+│   ├── database/migrations/        # Skema database
+│   ├── routes/api.php              # Definisi API routes
+│   └── .env.example
+│
+├── study-buddy-fe/                 # Frontend React
+│   └── src/
+│       ├── api/axios.js            # Axios instance + interceptors
+│       ├── context/ThemeContext.jsx
+│       ├── layouts/                # MainLayout, GuestLayout
+│       ├── pages/                  # Landing, Login, Register, Dashboard
+│       ├── services/               # authService, taskService
+│       └── components/             # Navbar, TaskItem
+│
+└── README.md
 ```
 
-## API Endpoints
+---
 
-Backend menyediakan API endpoints berikut:
+## 🔌 API Endpoints
 
-- `GET /api/tasks` - Mendapatkan semua tugas
-- `POST /api/tasks` - Membuat tugas baru
-- `PUT /api/tasks/{id}` - Update tugas
-- `DELETE /api/tasks/{id}` - Hapus tugas
-- `POST /api/login` - Login pengguna
-- `POST /api/register` - Registrasi pengguna
+Base URL: `http://localhost:8000/api`
 
-## Testing
+### Auth
 
-### Backend
+| Method | Endpoint | Auth | Deskripsi |
+|--------|----------|------|-----------|
+| `POST` | `/signup` | ❌ | Registrasi akun baru |
+| `POST` | `/login` | ❌ | Login, mendapat Bearer token |
+| `POST` | `/logout` | ✅ | Logout, revoke token |
 
+### Tasks
+
+| Method | Endpoint | Auth | Deskripsi |
+|--------|----------|------|-----------|
+| `GET` | `/tasks` | ✅ | Ambil semua tugas milik user |
+| `POST` | `/tasks` | ✅ | Buat tugas baru |
+| `GET` | `/tasks/{id}` | ✅ | Detail satu tugas |
+| `PUT` | `/tasks/{id}` | ✅ | Update tugas |
+| `DELETE` | `/tasks/{id}` | ✅ | Hapus tugas |
+
+> Semua endpoint bertanda ✅ memerlukan header: `Authorization: Bearer <token>`
+
+---
+
+## 🗄️ Skema Database
+
+```
+users
+├── id (PK)
+├── name
+├── email (unique)
+├── password (hashed)
+└── timestamps
+
+tasks
+├── id (PK)
+├── title
+├── description (nullable)
+├── completed (boolean, default: false)
+├── deadline (date, nullable)
+├── user_id (FK → users.id, cascade delete)
+└── timestamps
+```
+
+---
+
+## 🏗️ Build untuk Production
+
+**Frontend:**
+```bash
+cd study-buddy-fe
+npm run build
+# Output ada di folder dist/
+```
+
+**Backend:**
+```bash
+cd study-buddy-be
+# Set APP_ENV=production dan APP_DEBUG=false di .env
+php artisan config:cache
+php artisan route:cache
+php artisan optimize
+```
+
+---
+
+## 🧪 Testing
+
+**Backend:**
 ```bash
 cd study-buddy-be
 php artisan test
 ```
 
-### Frontend
-
+**Frontend (lint):**
 ```bash
 cd study-buddy-fe
-npm run test
+npm run lint
 ```
 
-## Deployment
+---
 
-Untuk deployment production:
+## 🤝 Kontribusi
 
-1. Setup server dengan PHP dan Node.js
-2. Konfigurasi web server (Apache/Nginx) untuk Laravel
-3. Build frontend: `npm run build` di folder study-buddy-fe
-4. Upload file build ke server
-
-## Kontribusi
-
-1. Fork repository
-2. Buat branch fitur baru (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
+1. Fork repository ini
+2. Buat branch fitur: `git checkout -b feature/nama-fitur`
+3. Commit: `git commit -m 'feat: tambah fitur X'`
+4. Push: `git push origin feature/nama-fitur`
 5. Buat Pull Request
 
-## Lisensi
+---
 
-Proyek ini menggunakan lisensi MIT. Lihat file `LICENSE` untuk detail lebih lanjut.
+## 📄 Lisensi
 
-## Kontak
+Proyek ini menggunakan lisensi **MIT**. Lihat file [LICENSE](LICENSE) untuk detail.
 
-Jika ada pertanyaan, silakan buat issue di repository GitHub ini.
+---
+
+<div align="center">
+  <p>Dibuat dengan ❤️ oleh <strong>CC26-PS048</strong></p>
+  <p><sub>© 2026 StudyBuddy Team</sub></p>
+</div>

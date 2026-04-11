@@ -20,13 +20,13 @@ class TaskController extends Controller
             'deadline' => 'nullable|date',
         ]);
 
-        $validated['user_id'] = auth()->id();
+        $validated['user_id'] = $request->user()->id;
 
         $task = Task::create($validated);
         return response()->json($task, 201);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->first();
 
@@ -37,7 +37,7 @@ class TaskController extends Controller
         return $task;
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->first();
 
@@ -56,7 +56,7 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $task = Task::where('id', $id)->where('user_id', auth()->id())->first();
 
